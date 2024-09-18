@@ -1,0 +1,13 @@
+.clicker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 18px;
+}
+.clicker_button {
+  margin-top: 5px;
+  width: 90px;
+  height: 30px;
+  border-style: solid;
+}

@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+body {
+  height: 100vh;
+  background-color: #238a0a;
+}
+.CoinsAndTokens {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.break {
+  width: 30px;
+}
+#sell {
+  margin-top: 5px;
+}
