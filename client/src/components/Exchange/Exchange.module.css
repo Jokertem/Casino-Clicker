@@ -9,6 +9,7 @@
   height: 25px;
   background-color: #1e90ff;
   color: white;
+  cursor: pointer;
 }
 .exchange_buttonFalse {
   width: 80px;

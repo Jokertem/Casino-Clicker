@@ -7,7 +7,11 @@ import Clicker from "./components/Clicker/Clicker";
 import Coin from "./components/Coin/Coin";
 import Token from "./components/Token/Token";
 import Exchange from "./components/Exchange/Exchange";
+import GameList from "./components/GamesList/GameList";
+import Roulette from "./components/Roulette/Roulette";
 function App() {
+  const games = ["Roulette", "Black_Jack", "Dice", "Poker"];
+
   const [name, setName] = useState("Player");
   const ChangeName = (data) => {
     let name = data;
@@ -37,6 +41,14 @@ function App() {
   const SellTokens = (data) => {
     setCoins(coins + data.cost);
     setTokens(tokens - Number(data.tokens));
+  };
+  const GameResult = (data) => {
+    console.log(data);
+    if (data.result == "win") {
+      setTokens(tokens + data.tokens);
+    } else {
+      setTokens(tokens - data.tokens);
+    }
   };
   useEffect(() => {
     const player = {
@@ -68,6 +80,12 @@ function App() {
           path="/"
           element={
             <>
+              <nav>
+                {games.map((game) => (
+                  <GameList key={game} game={game} />
+                ))}
+              </nav>
+
               <Name name={name} changeName={ChangeName} />
               <Clicker
                 clicks={clicks}
@@ -88,6 +106,10 @@ function App() {
               />
             </>
           }
+        />
+        <Route
+          path="/Roulette"
+          element={<Roulette tokens={tokens} game={GameResult} />}
         />
       </Routes>
     </>

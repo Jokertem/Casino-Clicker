@@ -19,3 +19,44 @@ body {
 #sell {
   margin-top: 5px;
 }
+nav {
+  text-align: center;
+}
+.area {
+  width: 40px;
+  height: 40px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  cursor: pointer;
+}
+.area:hover {
+  background-color: purple;
+}
+.lime {
+  background-color: lime;
+}
+.red {
+  background-color: red;
+}
+.black {
+  background-color: black;
+}
+
+#ID0 {
+  height: 120px;
+  grid-row-end: span 4;
+}
+#IDRed {
+  grid-column-start: 6;
+  grid-column-end: 8;
+  width: 80px;
+}
+#IDBlack {
+  width: 80px;
+}
+.selected {
+  background-color: purple;
+}
