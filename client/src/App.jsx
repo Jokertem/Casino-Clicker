@@ -8,6 +8,7 @@ import Coin from "./components/Coin/Coin";
 import Token from "./components/Token/Token";
 import Exchange from "./components/Exchange/Exchange";
 import GameList from "./components/GamesList/GameList";
+import Store from "./components/Store/Store";
 import Roulette from "./components/Roulette/Roulette";
 function App() {
   const games = ["Roulette", "Black_Jack", "Dice", "Poker"];
@@ -25,8 +26,35 @@ function App() {
   const [clicks, setClicks] = useState(0);
   const [coins, setCoins] = useState(1000);
   const [tokens, setTokens] = useState(0);
-  const [clicksForCoin, setClicksForCoin] = useState(5);
+  const [clicksForCoin, setClicksForCoin] = useState(40);
   const [tokenPrice, setTokenPrice] = useState(10);
+  const [items, setItems] = useState([
+    {
+      name: "Double Click",
+      price: 12,
+      bought: false,
+    },
+    {
+      name: "Discount on tokens 3$",
+      price: 90,
+      bought: false,
+    },
+    {
+      name: "Clicks to coins -6",
+      price: 90,
+      bought: false,
+    },
+    {
+      name: "Clicks to coins -11",
+      price: 120,
+      bought: false,
+    },
+    {
+      name: "Tripple Click ",
+      price: 33,
+      bought: false,
+    },
+  ]);
   const Click = () => {
     setClicks(clicks + 1);
     if (clicks >= clicksForCoin) {
@@ -56,11 +84,20 @@ function App() {
       clicks: clicks,
       coins: coins,
       tokens: tokens,
+      price: tokenPrice,
+      clicksForCoin: clicksForCoin,
     };
     localStorage.setItem("player", JSON.stringify(player));
   });
   let player = localStorage.getItem("player");
   player = JSON.parse(player);
+
+  const BuyItem = (data) => {
+    console.log(data);
+    const index = items.findIndex((item) => item.name == data);
+    items[index].bought = true;
+    setCoins(coins - items[index].price);
+  };
 
   useEffect(() => {
     if (player) {
@@ -104,6 +141,19 @@ function App() {
                 buy={BuyTokens}
                 sell={SellTokens}
               />
+              <b className="Store">Store</b>
+              <div className="Items">
+                {items.map((item) => (
+                  <Store
+                    key={item.name}
+                    coins={coins}
+                    name={item.name}
+                    price={item.price}
+                    bought={item.bought}
+                    buy={BuyItem}
+                  />
+                ))}
+              </div>
             </>
           }
         />

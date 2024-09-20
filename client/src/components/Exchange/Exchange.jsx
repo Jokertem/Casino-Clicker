@@ -25,7 +25,7 @@ const Exchange = (props) => {
           }}
         />
         <label className={styles.exchange_label} htmlFor="">
-          {props.price} for 5 tokens
+          {props.price}$ for 5 tokens
         </label>
         {cost <= props.coins ? (
           <button

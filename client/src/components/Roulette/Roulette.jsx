@@ -20,10 +20,9 @@ const RouletteBoard = (props) => {
 };
 
 const Roulette = (props) => {
-  const [win, SetWin] = useState(undefined);
   const [tokens, SetTokens] = useState(props.tokens);
   const [number, SetNumber] = useState(undefined);
-  const [rate, SeetRate] = useState(5);
+  const [rate, SeetRate] = useState(0);
   const [drawnNumber, setDrawnNumber] = useState("");
   const [drawnColor, setDrawnColor] = useState("");
 
