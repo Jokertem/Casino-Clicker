@@ -12,7 +12,7 @@ const GameList = (props) => {
         }}
         to={`/${props.game}`}
       >
-        {props.game + " "}
+        {props.game + " |"}
       </Link>
     </>
   );

@@ -4,8 +4,8 @@
 
 .coin {
   background-color: #ffff66;
-  width: var(--coinsiize);
-  height: var(--coinsiize);
+  min-width: var(--coinsiize);
+  min-height: var(--coinsiize);
   border-radius: 50%;
   border: 5px solid #ded827;
   display: flex;

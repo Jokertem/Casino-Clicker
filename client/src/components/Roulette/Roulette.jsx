@@ -200,9 +200,9 @@ const Roulette = (props) => {
                 if (color == yourColor) {
                   console.log("Win");
 
-                  SetTokens(tokens + rate * 2);
+                  SetTokens(Math.floor(tokens + rate * 1.2));
                   const res = tokens;
-                  props.game({ result: "win", tokens: rate * 2 });
+                  props.game({ result: "win", tokens: Math.floor(rate * 1.2) });
                   return;
                 } else {
                   console.log("Lose");

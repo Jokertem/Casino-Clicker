@@ -10,8 +10,10 @@ import Exchange from "./components/Exchange/Exchange";
 import GameList from "./components/GamesList/GameList";
 import Store from "./components/Store/Store";
 import Roulette from "./components/Roulette/Roulette";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
-  const games = ["Roulette", "Black_Jack", "Dice", "Poker"];
+  const games = ["Roulette", "Black_Jack", "Dice", "Poker", "One_Armed_Bandit"];
 
   const [name, setName] = useState("Player");
   const ChangeName = (data) => {
@@ -23,6 +25,7 @@ function App() {
 
     setName(name);
   };
+  const [clickType, setClickType] = useState(1);
   const [clicks, setClicks] = useState(0);
   const [coins, setCoins] = useState(1000);
   const [tokens, setTokens] = useState(0);
@@ -31,34 +34,34 @@ function App() {
   const [items, setItems] = useState([
     {
       name: "Double Click",
-      price: 12,
-      bought: false,
-    },
-    {
-      name: "Discount on tokens 3$",
-      price: 90,
-      bought: false,
-    },
-    {
-      name: "Clicks to coins -6",
-      price: 90,
-      bought: false,
-    },
-    {
-      name: "Clicks to coins -11",
       price: 120,
       bought: false,
     },
     {
+      name: "Discount on tokens 3$",
+      price: 140,
+      bought: false,
+    },
+    {
+      name: "Clicks to coins -6",
+      price: 320,
+      bought: false,
+    },
+    {
+      name: "Clicks to coins -11",
+      price: 410,
+      bought: false,
+    },
+    {
       name: "Tripple Click ",
-      price: 33,
+      price: 450,
       bought: false,
     },
   ]);
   const Click = () => {
-    setClicks(clicks + 1);
+    setClicks(clicks + clickType);
     if (clicks >= clicksForCoin) {
-      setClicks(1);
+      setClicks(clickType);
       setCoins(coins + 1);
     }
   };
@@ -74,8 +77,10 @@ function App() {
     console.log(data);
     if (data.result == "win") {
       setTokens(tokens + data.tokens);
+      toast.success(`You Win ${data.tokens}Tokens`);
     } else {
       setTokens(tokens - data.tokens);
+      toast.error(`You lose ${data.tokens}Tokens `);
     }
   };
   useEffect(() => {
@@ -86,30 +91,72 @@ function App() {
       tokens: tokens,
       price: tokenPrice,
       clicksForCoin: clicksForCoin,
+      clickType: clickType,
     };
     localStorage.setItem("player", JSON.stringify(player));
+    localStorage.setItem("store", JSON.stringify(items));
   });
-  let player = localStorage.getItem("player");
-  player = JSON.parse(player);
 
   const BuyItem = (data) => {
     console.log(data);
     const index = items.findIndex((item) => item.name == data);
     items[index].bought = true;
     setCoins(coins - items[index].price);
+    switch (index) {
+      case 0:
+        setClickType(2);
+        break;
+      case 1:
+        setTokenPrice(tokenPrice - 3);
+        break;
+      case 2:
+        setClicksForCoin(clicksForCoin - 6);
+        break;
+      case 3:
+        setClicksForCoin(clicksForCoin - 11);
+        break;
+      case 4:
+        setClickType(3);
+        items[0].bought = true;
+        break;
+      default:
+        break;
+    }
+    toast.success(`You buy ${items[index].name} for ${items[index].price}$`);
   };
-
+  let player = localStorage.getItem("player");
+  player = JSON.parse(player);
+  let store = localStorage.getItem("store");
+  store = JSON.parse(store);
   useEffect(() => {
     if (player) {
       setName(player.name);
       setClicks(player.clicks);
       setCoins(player.coins);
       setTokens(player.tokens);
+      setClickType(player.clickType);
+      setClicksForCoin(player.clicksForCoin);
+      setTokenPrice(player.price);
+    }
+    if (store) {
+      setItems(store);
     }
   }, []);
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <Header />
 
       <Routes>

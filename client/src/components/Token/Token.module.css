@@ -4,8 +4,8 @@
 
 .token {
   background-color: white;
-  width: var(--tokeniize);
-  height: var(--tokeniize);
+  min-width: var(--tokeniize);
+  min-height: var(--tokeniize);
   border-radius: 50%;
   border: 5px dashed black;
   display: flex;
