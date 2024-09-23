@@ -100,7 +100,10 @@ const Roulette = (props) => {
         </div>
       </div>
       <div className={styles.panel}>
-        <Token tokens={tokens} />
+        <div className={styles.panel_tokens}>
+          <b>Your Tokens</b>
+          <Token tokens={tokens} />
+        </div>
 
         <div className={styles.panel_rateControl}>
           <div className={styles.panel_rateControl_Add}>
@@ -172,7 +175,10 @@ const Roulette = (props) => {
             </button>
           </div>
         </div>
-        <Token tokens={rate} />
+        <div className={styles.panel_rate}>
+          <b>Your Rate</b>
+          <Token tokens={rate} />
+        </div>
         <button
           className={styles.spin}
           onClick={() => {
@@ -229,6 +235,21 @@ const Roulette = (props) => {
                   return;
                 }
               }
+            } else if (number == undefined) {
+              props.game({
+                result: "error",
+                message: "You have not selected any number",
+              });
+            } else if (rate < 5) {
+              props.game({
+                result: "error",
+                message: "You didn't bet anything",
+              });
+            } else {
+              props.game({
+                result: "error",
+                message: "You don't have enough tokens",
+              });
             }
           }}
         >

@@ -10,6 +10,7 @@ import Exchange from "./components/Exchange/Exchange";
 import GameList from "./components/GamesList/GameList";
 import Store from "./components/Store/Store";
 import Roulette from "./components/Roulette/Roulette";
+import BlackJack from "./components/BlackJack/BlackJack";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
@@ -78,9 +79,11 @@ function App() {
     if (data.result == "win") {
       setTokens(tokens + data.tokens);
       toast.success(`You Win ${data.tokens}Tokens`);
-    } else {
+    } else if (data.result == "lose") {
       setTokens(tokens - data.tokens);
       toast.error(`You lose ${data.tokens}Tokens `);
+    } else {
+      toast.error(data.message);
     }
   };
   useEffect(() => {
@@ -207,6 +210,10 @@ function App() {
         <Route
           path="/Roulette"
           element={<Roulette tokens={tokens} game={GameResult} />}
+        />
+        <Route
+          path="/Black_Jack"
+          element={<BlackJack name={name} tokens={tokens} game={GameResult} />}
         />
       </Routes>
     </>

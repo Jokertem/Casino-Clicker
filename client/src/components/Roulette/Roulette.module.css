@@ -15,6 +15,10 @@
   margin-top: 50px;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+}
+.panel div {
+  margin: 10px;
 }
 .panel_drawn {
   width: 80px;
@@ -50,5 +54,11 @@
   font-size: 35px;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+.panel_rate,
+.panel_tokens {
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }

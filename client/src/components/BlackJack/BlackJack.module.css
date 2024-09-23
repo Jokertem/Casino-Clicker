@@ -1,0 +1,60 @@
+.panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.panel div {
+  margin: 10px;
+}
+.panel__rate,
+.panel__tokens {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.add,
+.remove {
+  width: 60px;
+  height: 40px;
+  cursor: pointer;
+}
+.add {
+  background-color: #1e90ff;
+}
+.remove {
+  background-color: red;
+}
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.board__start {
+  width: 80px;
+  height: 35px;
+  color: white;
+  background-color: #1e90ff;
+}
+.board__2x,
+.board__draw,
+.board__pass {
+  width: 40px;
+  height: 40px;
+  color: white;
+}
+.board__2x {
+  background-color: #1e90ff;
+}
+.board__draw {
+  background-color: lime;
+}
+.board__pass {
+  background-color: red;
+}
+.board__playerCards,
+.board__oponentCards {
+  display: flex;
+  justify-items: center;
+  flex-wrap: wrap;
+}
