@@ -75,7 +75,6 @@ function App() {
     setTokens(tokens - Number(data.tokens));
   };
   const GameResult = (data) => {
-    console.log(data);
     if (data.result == "win") {
       setTokens(tokens + data.tokens);
       toast.success(`You Win ${data.tokens}Tokens`);

@@ -183,13 +183,10 @@ const Roulette = (props) => {
           className={styles.spin}
           onClick={() => {
             if (number != undefined && tokens >= rate && rate >= 5) {
-              console.log("SPIN");
-
               const drawn = Math.round(Math.random() * 36);
               let color = undefined;
               setDrawnNumber(drawn);
 
-              console.log(drawn);
               if (drawn == 0) {
                 setDrawnColor("lime");
                 color = "lime";
@@ -202,17 +199,13 @@ const Roulette = (props) => {
               }
               if (number == "Red" || number == "Black") {
                 const yourColor = number.toLowerCase();
-                console.log(yourColor);
-                if (color == yourColor) {
-                  console.log("Win");
 
+                if (color == yourColor) {
                   SetTokens(Math.floor(tokens + rate * 1.2));
                   const res = tokens;
                   props.game({ result: "win", tokens: Math.floor(rate * 1.2) });
                   return;
                 } else {
-                  console.log("Lose");
-
                   SetTokens(tokens - rate);
                   if (tokens < 0) {
                     SetTokens(0);
@@ -222,14 +215,10 @@ const Roulette = (props) => {
                 }
               } else {
                 if (drawn == number) {
-                  console.log("Win");
-
                   SetTokens(tokens + rate * 3);
                   props.game({ result: "win", tokens: rate * 3 });
                   return;
                 } else {
-                  console.log("Lose");
-
                   SetTokens(tokens - rate);
                   props.game({ result: "lose", tokens: rate });
                   return;

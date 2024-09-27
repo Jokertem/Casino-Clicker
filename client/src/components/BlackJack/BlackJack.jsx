@@ -4,7 +4,115 @@ import Token from "../Token/Token";
 import Card from "../Card/Card";
 import { useState, useEffect } from "react";
 
+let newTotal = 0;
+let _pass = false;
 const Board = (props) => {
+  const [cards, setCards] = useState([]);
+  const renderCards = () => {
+    let value;
+    let gameValue;
+    for (let index = 1; index < 14; index++) {
+      if (index == 1) {
+        value = "A";
+
+        gameValue = 11;
+      } else if (index == 11) {
+        value = "J";
+        gameValue = 10;
+      } else if (index == 12) {
+        value = "D";
+        gameValue = 10;
+      } else if (index == 13) {
+        value = "K";
+        gameValue = 10;
+      } else {
+        value = index;
+        gameValue = index;
+      }
+      const card = {
+        value: value,
+        color: "Spades",
+        gameValue: gameValue,
+        _id: crypto.randomUUID(),
+      };
+      cards.push(card);
+    }
+    for (let index = 1; index < 14; index++) {
+      if (index == 1) {
+        value = "A";
+        gameValue = 11;
+      } else if (index == 11) {
+        value = "J";
+        gameValue = 10;
+      } else if (index == 12) {
+        value = "D";
+        gameValue = 10;
+      } else if (index == 13) {
+        value = "K";
+        gameValue = 10;
+      } else {
+        value = index;
+        gameValue = index;
+      }
+      const card = {
+        value: value,
+        color: "Hearts",
+        gameValue: gameValue,
+        _id: crypto.randomUUID(),
+      };
+      cards.push(card);
+    }
+    for (let index = 1; index < 14; index++) {
+      if (index == 1) {
+        value = "A";
+        gameValue = 11;
+      } else if (index == 11) {
+        value = "J";
+        gameValue = 10;
+      } else if (index == 12) {
+        value = "D";
+        gameValue = 10;
+      } else if (index == 13) {
+        value = "K";
+        gameValue = 10;
+      } else {
+        value = index;
+        gameValue = index;
+      }
+      const card = {
+        value: value,
+        color: "Diamond",
+        gameValue: gameValue,
+        _id: crypto.randomUUID(),
+      };
+      cards.push(card);
+    }
+    for (let index = 1; index < 14; index++) {
+      if (index == 1) {
+        value = "A";
+        gameValue = 11;
+      } else if (index == 11) {
+        value = "J";
+        gameValue = 10;
+      } else if (index == 12) {
+        value = "D";
+        gameValue = 10;
+      } else if (index == 13) {
+        value = "K";
+        gameValue = 10;
+      } else {
+        value = index;
+        gameValue = index;
+      }
+      const card = {
+        value: value,
+        color: "Clubs",
+        gameValue: gameValue,
+        _id: crypto.randomUUID(),
+      };
+      cards.push(card);
+    }
+  };
   const [playerCards, setPlayerCards] = useState([]);
   const [oponentCards, setOponentCards] = useState([]);
   const [playerTotal, setPlayerTotal] = useState(0);
@@ -13,29 +121,68 @@ const Board = (props) => {
 
   const [drawncards, setDrawnCards] = useState([]);
 
-  const oponentDrawCard = () => {
-    const rnd = Math.round(Math.random() * props.cards.length);
-    const card = props.cards[rnd];
+  const oponentDrawCard = (pass) => {
+    if (!pass) {
+      const rnd = Math.round(Math.random() * cards.length - 1);
+      const card = cards[rnd];
 
-    setOponentCards((previous) => [...previous, card]);
-    setOponentTotal((previous) => previous + card.gameValue);
-    drawncards.push(card._id);
-    console.log(card._id);
+      setOponentCards((previous) => [...previous, card]);
+      setOponentTotal((previous) => previous + card.gameValue);
+      newTotal = oponentTotal + card.gameValue;
+    } else {
+      if (newTotal <= 16) {
+        const rnd = Math.round(Math.random() * cards.length - 1);
+        const card = cards[rnd];
+
+        setOponentCards((previous) => [...previous, card]);
+        setOponentTotal((previous) => previous + card.gameValue);
+        newTotal = newTotal + card.gameValue;
+        console.log(newTotal);
+      }
+      if (newTotal <= 16) {
+        const rnd = Math.round(Math.random() * cards.length - 1);
+        const card = cards[rnd];
+
+        setOponentCards((previous) => [...previous, card]);
+        setOponentTotal((previous) => previous + card.gameValue);
+        newTotal = newTotal + card.gameValue;
+        console.log(newTotal);
+      }
+      if (newTotal <= 16) {
+        const rnd = Math.round(Math.random() * cards.length - 1);
+        const card = cards[rnd];
+
+        setOponentCards((previous) => [...previous, card]);
+        setOponentTotal((previous) => previous + card.gameValue);
+        newTotal = newTotal + card.gameValue;
+        console.log(newTotal);
+      }
+      _pass = true;
+    }
   };
   const playerDrawCard = () => {
-    const rnd = Math.round(Math.random() * props.cards.length);
-    const card = props.cards[rnd];
+    const rnd = Math.round(Math.random() * cards.length - 1);
+    const card = cards[rnd];
 
     setPlayerTotal((previous) => previous + card.gameValue);
     setPlayerCards((previous) => [...previous, card]);
 
     drawncards.push(card._id);
-    console.log(playerTotal);
   };
 
-  const Double = () => {};
-  const Pass = () => {};
+  const Double = () => {
+    console.log(oponentTotal);
+  };
+  const Pass = () => {
+    oponentCards.forEach((element, index) => {
+      if (element.value == "hide") {
+        oponentCards.splice(index, 1);
+      }
+    });
+    oponentDrawCard(true);
+  };
   const StartGame = () => {
+    console.log("start");
     if (props.rate < 5) {
       props.game({ result: "error", message: "You didn't bet anything" });
       return;
@@ -44,7 +191,7 @@ const Board = (props) => {
       return;
     }
 
-    oponentDrawCard();
+    oponentDrawCard(false);
     const hideCard = {
       value: "hide",
       color: "",
@@ -53,12 +200,142 @@ const Board = (props) => {
     setOponentCards((previous) => [...previous, hideCard]);
     playerDrawCard();
 
-    playerDrawCard();
+    const rnd = Math.round(Math.random() * cards.length - 1);
+    const card = cards[rnd];
+
+    setPlayerTotal((previous) => previous + card.gameValue);
+    setPlayerCards((previous) => [...previous, card]);
+
+    drawncards.push(card._id);
+
     setStart(!start);
     props.start();
   };
-  useEffect((total) => {});
 
+  useEffect(() => {
+    if (playerTotal == 21) {
+      props.game({
+        result: "win",
+        tokens: Math.round(props.rate + props.rate / 2),
+      });
+      setTimeout(() => {
+        setPlayerTotal(0);
+        setOponentTotal(0);
+        setPlayerCards([]);
+        setOponentCards([]);
+        props.start();
+        setStart(!start);
+        _pass = false;
+        props.win(Math.round(props.rate + props.rate / 2));
+        return;
+      }, 600);
+    } else if (playerTotal > 21) {
+      props.game({
+        result: "lose",
+        tokens: props.rate,
+      });
+      setTimeout(() => {
+        setPlayerTotal(0);
+        setOponentTotal(0);
+        setPlayerCards([]);
+        setOponentCards([]);
+        props.start();
+        setStart(!start);
+        _pass = false;
+        props.lose(props.rate);
+        return;
+      }, 600);
+    }
+  }, [playerTotal]);
+
+  useEffect(() => {
+    console.log(_pass);
+    if (oponentTotal == 21) {
+      props.game({
+        result: "lose",
+        tokens: Math.round(props.rate),
+      });
+      setTimeout(() => {
+        setPlayerTotal(0);
+        setOponentTotal(0);
+        setPlayerCards([]);
+        setOponentCards([]);
+        props.start();
+        setStart(!start);
+        _pass = false;
+        props.lose(props.rate);
+        return;
+      }, 600);
+    } else if (oponentTotal > 21) {
+      props.game({
+        result: "win",
+        tokens: Math.round(props.rate + props.rate),
+      });
+      setTimeout(() => {
+        setPlayerTotal(0);
+        setOponentTotal(0);
+        setPlayerCards([]);
+        setOponentCards([]);
+        props.start();
+        setStart(!start);
+        props.win(props.rate * 2);
+        _pass = false;
+
+        return;
+      }, 600);
+    } else if (oponentTotal > playerTotal && _pass == true) {
+      props.game({
+        result: "lose",
+        tokens: Math.round(props.rate),
+      });
+      setTimeout(() => {
+        setPlayerTotal(0);
+        setOponentTotal(0);
+        setPlayerCards([]);
+        setOponentCards([]);
+        props.start();
+        setStart(!start);
+        _pass = false;
+        props.lose(props.rate);
+        return;
+      }, 600);
+    } else if (oponentTotal == playerTotal && _pass == true) {
+      props.game({
+        result: "lose",
+        tokens: Math.round(props.rate + props.rate),
+      });
+      setTimeout(() => {
+        setPlayerTotal(0);
+        setOponentTotal(0);
+        setPlayerCards([]);
+        setOponentCards([]);
+        props.start();
+        setStart(!start);
+        props.lose(props.rate);
+        _pass = false;
+        return;
+      }, 600);
+    } else if (oponentTotal < playerTotal && _pass == true) {
+      props.game({
+        result: "win",
+        tokens: Math.round(props.rate + props.rate * 2),
+      });
+      setTimeout(() => {
+        setPlayerTotal(0);
+        setOponentTotal(0);
+        setPlayerCards([]);
+        setOponentCards([]);
+        props.start();
+        setStart(!start);
+        _pass = false;
+        props.win(props.rate * 2);
+        return;
+      }, 600);
+    }
+  }, [oponentCards]);
+  useEffect(() => {
+    renderCards();
+  }, [cards]);
   return (
     <div className={styles.board}>
       <h2>Black Jack</h2>
@@ -98,12 +375,7 @@ const Board = (props) => {
                 +
               </button>{" "}
               <>
-                <button
-                  className={styles.board__pass}
-                  onClick={() => {
-                    Pass();
-                  }}
-                >
+                <button className={styles.board__pass} onClick={Pass}>
                   -
                 </button>
               </>
@@ -121,116 +393,19 @@ const Board = (props) => {
 
 const BlackJack = (props) => {
   const [start, setStart] = useState(false);
-  const [tokens, setTokens] = useState(5);
+  const [tokens, setTokens] = useState(props.tokens);
   const [rate, setRate] = useState(0);
-  const [cards, setCards] = useState([]);
-  const renderCards = () => {
-    let value;
-    let gameValue;
-    for (let index = 1; index < 14; index++) {
-      if (index == 1) {
-        value = "A";
-      } else if (index == 11) {
-        value = "J";
-        gameValue = 10;
-      } else if (index == 12) {
-        value = "D";
-        gameValue = 10;
-      } else if (index == 13) {
-        value = "K";
-        gameValue = 10;
-      } else {
-        value = index;
-        gameValue = index;
-      }
-      const card = {
-        value: value,
-        color: "Spades",
-        gameValue: gameValue,
-        _id: crypto.randomUUID(),
-      };
-      cards.push(card);
-    }
-    for (let index = 1; index < 14; index++) {
-      if (index == 1) {
-        value = "A";
-      } else if (index == 11) {
-        value = "J";
-        gameValue = 10;
-      } else if (index == 12) {
-        value = "D";
-        gameValue = 10;
-      } else if (index == 13) {
-        value = "K";
-        gameValue = 10;
-      } else {
-        value = index;
-        gameValue = index;
-      }
-      const card = {
-        value: value,
-        color: "Hearts",
-        gameValue: gameValue,
-        _id: crypto.randomUUID(),
-      };
-      cards.push(card);
-    }
-    for (let index = 1; index < 14; index++) {
-      if (index == 1) {
-        value = "A";
-      } else if (index == 11) {
-        value = "J";
-        gameValue = 10;
-      } else if (index == 12) {
-        value = "D";
-        gameValue = 10;
-      } else if (index == 13) {
-        value = "K";
-        gameValue = 10;
-      } else {
-        value = index;
-        gameValue = index;
-      }
-      const card = {
-        value: value,
-        color: "Diamond",
-        gameValue: gameValue,
-        _id: crypto.randomUUID(),
-      };
-      cards.push(card);
-    }
-    for (let index = 1; index < 14; index++) {
-      if (index == 1) {
-        value = "A";
-      } else if (index == 11) {
-        value = "J";
-        gameValue = 10;
-      } else if (index == 12) {
-        value = "D";
-        gameValue = 10;
-      } else if (index == 13) {
-        value = "K";
-        gameValue = 10;
-      } else {
-        value = index;
-        gameValue = index;
-      }
-      const card = {
-        value: value,
-        color: "Clubs",
-        gameValue: gameValue,
-        _id: crypto.randomUUID(),
-      };
-      cards.push(card);
-    }
+
+  const Win = (data) => {
+    setTokens(tokens + data);
+  };
+  const Lose = (data) => {
+    setTokens(tokens - data);
   };
   const HideShowButtons = () => {
     setStart(!start);
   };
 
-  useEffect(() => {
-    renderCards();
-  }, [cards]);
   useEffect(() => {
     if (rate > 1000) {
       setRate(1000);
@@ -243,11 +418,12 @@ const BlackJack = (props) => {
     <>
       <Board
         name={props.name}
-        cards={cards}
         tokens={tokens}
         rate={rate}
         game={props.game}
         start={HideShowButtons}
+        win={Win}
+        lose={Lose}
       />
       <div className={styles.panel}>
         <div className={styles.panel__tokens}>
