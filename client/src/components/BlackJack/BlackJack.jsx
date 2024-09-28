@@ -137,7 +137,6 @@ const Board = (props) => {
         setOponentCards((previous) => [...previous, card]);
         setOponentTotal((previous) => previous + card.gameValue);
         newTotal = newTotal + card.gameValue;
-        console.log(newTotal);
       }
       if (newTotal <= 16) {
         const rnd = Math.round(Math.random() * cards.length - 1);
@@ -146,7 +145,6 @@ const Board = (props) => {
         setOponentCards((previous) => [...previous, card]);
         setOponentTotal((previous) => previous + card.gameValue);
         newTotal = newTotal + card.gameValue;
-        console.log(newTotal);
       }
       if (newTotal <= 16) {
         const rnd = Math.round(Math.random() * cards.length - 1);
@@ -155,7 +153,6 @@ const Board = (props) => {
         setOponentCards((previous) => [...previous, card]);
         setOponentTotal((previous) => previous + card.gameValue);
         newTotal = newTotal + card.gameValue;
-        console.log(newTotal);
       }
       _pass = true;
     }
@@ -171,7 +168,10 @@ const Board = (props) => {
   };
 
   const Double = () => {
-    console.log(oponentTotal);
+    if (props.tokens >= props.rate * 2) {
+      props.double();
+      Pass();
+    }
   };
   const Pass = () => {
     oponentCards.forEach((element, index) => {
@@ -182,7 +182,6 @@ const Board = (props) => {
     oponentDrawCard(true);
   };
   const StartGame = () => {
-    console.log("start");
     if (props.rate < 5) {
       props.game({ result: "error", message: "You didn't bet anything" });
       return;
@@ -228,7 +227,7 @@ const Board = (props) => {
         _pass = false;
         props.win(Math.round(props.rate + props.rate / 2));
         return;
-      }, 600);
+      }, 20000);
     } else if (playerTotal > 21) {
       props.game({
         result: "lose",
@@ -244,12 +243,11 @@ const Board = (props) => {
         _pass = false;
         props.lose(props.rate);
         return;
-      }, 600);
+      }, 1000);
     }
   }, [playerTotal]);
 
   useEffect(() => {
-    console.log(_pass);
     if (oponentTotal == 21) {
       props.game({
         result: "lose",
@@ -265,7 +263,7 @@ const Board = (props) => {
         _pass = false;
         props.lose(props.rate);
         return;
-      }, 600);
+      }, 2000);
     } else if (oponentTotal > 21) {
       props.game({
         result: "win",
@@ -282,7 +280,7 @@ const Board = (props) => {
         _pass = false;
 
         return;
-      }, 600);
+      }, 2000);
     } else if (oponentTotal > playerTotal && _pass == true) {
       props.game({
         result: "lose",
@@ -298,7 +296,7 @@ const Board = (props) => {
         _pass = false;
         props.lose(props.rate);
         return;
-      }, 600);
+      }, 2000);
     } else if (oponentTotal == playerTotal && _pass == true) {
       props.game({
         result: "lose",
@@ -314,7 +312,7 @@ const Board = (props) => {
         props.lose(props.rate);
         _pass = false;
         return;
-      }, 600);
+      }, 2000);
     } else if (oponentTotal < playerTotal && _pass == true) {
       props.game({
         result: "win",
@@ -330,7 +328,7 @@ const Board = (props) => {
         _pass = false;
         props.win(props.rate * 2);
         return;
-      }, 600);
+      }, 2000);
     }
   }, [oponentCards]);
   useEffect(() => {
@@ -405,10 +403,13 @@ const BlackJack = (props) => {
   const HideShowButtons = () => {
     setStart(!start);
   };
+  const Double = () => {
+    setRate(rate * 2);
+  };
 
   useEffect(() => {
-    if (rate > 1000) {
-      setRate(1000);
+    if (rate > 2000) {
+      setRate(2000);
     }
     if (rate < 0) {
       setRate(0);
@@ -424,6 +425,7 @@ const BlackJack = (props) => {
         start={HideShowButtons}
         win={Win}
         lose={Lose}
+        double={Double}
       />
       <div className={styles.panel}>
         <div className={styles.panel__tokens}>
