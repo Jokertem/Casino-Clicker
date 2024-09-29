@@ -57,7 +57,7 @@ const One_Armed_Bandit = (props) => {
           );
           console.log(index);
           props.game({ result: "win", tokens: symbols[index].price });
-          setTokens((previus) => previus + symbols[thirdBox].price);
+          setTokens((previus) => previus + symbols[index].price);
         } else {
           props.game({ result: "lose", tokens: 5 });
           setTokens((previus) => previus - 5);
