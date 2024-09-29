@@ -227,7 +227,7 @@ const Board = (props) => {
         _pass = false;
         props.win(Math.round(props.rate + props.rate / 2));
         return;
-      }, 20000);
+      }, 2000);
     } else if (playerTotal > 21) {
       props.game({
         result: "lose",
@@ -243,7 +243,7 @@ const Board = (props) => {
         _pass = false;
         props.lose(props.rate);
         return;
-      }, 1000);
+      }, 2000);
     }
   }, [playerTotal]);
 

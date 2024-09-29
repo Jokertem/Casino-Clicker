@@ -12,16 +12,11 @@ import Store from "./components/Store/Store";
 import Roulette from "./components/Roulette/Roulette";
 import BlackJack from "./components/BlackJack/BlackJack";
 import Aviator from "./components/Aviator/Aviator";
+import One_Armed_Bandit from "./components/OneArmedBandit/OneArmedBandit";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
-  const games = [
-    "Roulette",
-    "Black_Jack",
-    "Dice",
-    "Aviator",
-    "One_Armed_Bandit",
-  ];
+  const games = ["Roulette", "Black_Jack", "Aviator", "One_Armed_Bandit"];
 
   const [name, setName] = useState("Player");
   const ChangeName = (data) => {
@@ -224,6 +219,10 @@ function App() {
         <Route
           path="/Aviator"
           element={<Aviator name={name} tokens={tokens} game={GameResult} />}
+        />
+        <Route
+          path="/One_Armed_Bandit"
+          element={<One_Armed_Bandit tokens={tokens} game={GameResult} />}
         />
       </Routes>
     </>

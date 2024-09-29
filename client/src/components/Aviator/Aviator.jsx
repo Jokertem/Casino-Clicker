@@ -12,7 +12,7 @@ const Aviator = (props) => {
 
   const Random = () => {
     const rndMultiplier = Math.round(Math.random() * 5);
-    const rndMultiplierTwo = Math.round(Math.random() * 100 + 40);
+    const rndMultiplierTwo = Math.round(Math.random() * 100 + 90);
     setRandomMultipler(Number(`${rndMultiplier}.${rndMultiplierTwo}`));
     console.log(randomMultiplier);
   };
@@ -59,6 +59,7 @@ const Aviator = (props) => {
 
   return (
     <>
+      <h2 className={styles.tittle}>Aviator</h2>
       <div className={styles.multiplier}>
         <b>{`${multiplier},${multiplierTwo}x`}</b>
       </div>

@@ -1,3 +1,6 @@
+.tittle {
+  text-align: center;
+}
 .panel {
   display: flex;
   justify-content: center;
@@ -47,4 +50,5 @@
   height: 35px;
   color: white;
   background-color: #1e90ff;
+  cursor: pointer;
 }
